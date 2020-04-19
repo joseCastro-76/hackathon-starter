@@ -8,6 +8,9 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
+import Stats from './stats';
+import Graph from './graph';
+
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -40,7 +43,12 @@ function allyProps(index) {
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.background.paper,
-        width: 360,
+        minWidth: 250,
+        height: '100vh',
+    },
+    rootGrid: {
+        flexGrow: 1,
+        minWidth: '100%',
     },
 }));
 
@@ -59,6 +67,7 @@ export default function FullWidthTabs() {
 
     return(
         <div className={ classes.root }>
+            
             <AppBar position="static" color="default">
                 <Tabs
                     value={ value }
@@ -72,16 +81,19 @@ export default function FullWidthTabs() {
                     <Tab label="Graph" { ...allyProps(1) } />
                 </Tabs>
             </AppBar>
+
             <SwipeableViews
                 axis={ theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={ value }
                 onChangeIndex={ handleChangeIndex }
             >
+
                 <TabPanel value={ value } index={ 0 } dir={ theme.direction }>
-                    Stats
+                    <Stats />
                 </TabPanel>
+
                 <TabPanel value={ value } index={ 1 } dir={ theme.direction }>
-                    Graph
+                    <Graph />
                 </TabPanel>
 
             </SwipeableViews>

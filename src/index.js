@@ -2,13 +2,19 @@ import React from 'react';
 import { render } from 'react-dom';
 import './css/custom.scss';
 
-// import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 
 import FullWidthTabs from './fullWidthTabs';
 
 function App() {
     return (
-        <FullWidthTabs />
+        <React.Fragment>
+            <CssBaseline />
+            <Container maxWidth="sm" style={{ margin:0, padding: 0}}>
+                <FullWidthTabs />
+            </Container>
+        </React.Fragment>
     )
 }
 
