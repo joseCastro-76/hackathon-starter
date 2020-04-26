@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Stats() {
+export default function Stats(props) {
     const classes = useStyles();
 
     return(
@@ -27,7 +27,11 @@ export default function Stats() {
             >
 
                 <Grid item xs={ 12 }>
-                    <CountrySelect />  
+                    <CountrySelect
+                        countries={ props.countries }
+                        selectedCountry={ props.selectedCountry}
+                        handleSelectedCountry={ props.handleSelectedCountry }
+                    />  
                 </Grid>
 
                 <Grid
@@ -39,7 +43,9 @@ export default function Stats() {
                     item xs={ 12 }
                 >
                     {/* TODO: loop over stats */}
-                    <StatsCard />
+                    <StatsCard
+                        stats={ props.stats }
+                    />
                 </Grid>
 
             </Grid>

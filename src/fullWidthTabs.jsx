@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -10,6 +10,8 @@ import Box from '@material-ui/core/Box';
 
 import Stats from './stats';
 import Graph from './graph';
+// import useFetch from './useFetch';
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -52,10 +54,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function FullWidthTabs() {
+export default function FullWidthTabs(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
+    // const [stats, setStats] = React.useState();
+    // const [selectedCountry, setSelectedCountry] = React.useState();
+
+    // const countries = useFetch('https://covid19.mathdro.id/api/countries');
+    // const globalStats = useFetch('https://covid19.mathdro.id/api/');
+    // const countryStats = useFetch(`https://covid19.mathdro.id/api/countries/${selectedCountry}`);
+    // console.log(countryStats);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -89,11 +98,23 @@ export default function FullWidthTabs() {
             >
 
                 <TabPanel value={ value } index={ 0 } dir={ theme.direction }>
-                    <Stats />
+                    <Stats
+                        stats={ props.countryStats.data.error
+                                ? props.globalStats 
+                                : props.countryStats
+                            }
+                        countries= { props.countries }
+                        selectedCountry={ props.selectedCountry }
+                        handleSelectedCountry={ props.handleSelectedCountry }
+                    />
                 </TabPanel>
 
                 <TabPanel value={ value } index={ 1 } dir={ theme.direction }>
-                    <Graph />
+                    <Graph
+                        selectedCountry={ props.selectedCountry }
+                        countryStats={ props.countryStats }
+                        globalStats={ props.globalStats }
+                    />
                 </TabPanel>
 
             </SwipeableViews>

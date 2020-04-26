@@ -5,6 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
+// import useFetch from './useFetch';
+
 const useStyles = makeStyles({
     root: {
         minWidth: 300,
@@ -12,8 +14,14 @@ const useStyles = makeStyles({
     },
 });
 
-export default function SimpleCard() {
+export default function SimpleCard(props) {
     const classes = useStyles();
+
+    // const { data, loading, error } = useFetch('https://covid19.mathdro.id/api/')
+    const { data, loading, error } = props.stats;
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error...</p>;
 
     return (
         <React.Fragment>
@@ -22,7 +30,7 @@ export default function SimpleCard() {
                 <Card className={ classes.root }>
                     <CardContent>
                         <Typography gutterBottom variant="h4" component="h2">
-                            683,786
+                            { data.confirmed.value.toLocaleString('en-US') }
                         </Typography>
                         <Typography variant="body1" color="textSecondary" component="p">
                             Confirmed
@@ -35,7 +43,7 @@ export default function SimpleCard() {
                 <Card className={ classes.root }>
                     <CardContent>
                         <Typography gutterBottom variant="h4" component="h2">
-                            57,123
+                            { data.recovered.value.toLocaleString('en-US') }
                         </Typography>
                         <Typography variant="body1" color="textSecondary" component="p">
                             Recovered
@@ -48,7 +56,7 @@ export default function SimpleCard() {
                 <Card className={ classes.root }>
                     <CardContent>
                         <Typography gutterBottom variant="h4" component="h2">
-                            34,575
+                            { data.deaths.value.toLocaleString('en-US') }
                         </Typography>
                         <Typography variant="body1" color="textSecondary" component="p">
                             Deaths

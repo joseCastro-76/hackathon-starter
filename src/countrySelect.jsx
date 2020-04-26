@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
+
+import useFetch from './useFetch';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -19,13 +21,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SimpleSelect() {
-    const classes = useStyles();
-    const [age, setAge] = React.useState('');
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
+
+export default function SimpleSelect(props) {
+    const classes = useStyles();
+    const [country, setCountry] = React.useState('');
+    
+    // const { data: countries, loading, error } = useFetch('https://covid19.mathdro.id/api/countries')
+    const { data: countries, loading, error } = props.countries;
+
+    
+    // const handleChange = (event) => {
+    //     setCountry(event.target.value);
+    // };
+    
+    
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error...</p>;
 
     return (
         <div className={ classes.rootGrid }>
@@ -36,19 +48,19 @@ export default function SimpleSelect() {
                 <Select
                     labelId="country"
                     id="country"
-                    value={ age }
-                    onChange={ handleChange }
+                    value={ props.selectedCountry }
+                    onChange={ props.handleSelectedCountry }
                     label="Country"
                 >
-
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    {/* Map over countries */}
-                    <MenuItem value={10}>USA</MenuItem>
-                    <MenuItem value={20}>Africa</MenuItem>
-                    <MenuItem value={30}>Mexico</MenuItem>
-                    
+                    { countries.countries.map((country) => (
+                        <MenuItem
+                            // selected={ country }
+                            key={ country.iso3 }
+                            value={ country.name ? country.name : '' }
+                        >
+                                { country.name }
+                        </MenuItem>
+                    ))}
                 </Select>
             </FormControl>
         </div>

@@ -15,9 +15,62 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Graph() {
+export default function Graph(props) {
     const classes = useStyles();
+    const [category, setCategory] = React.useState(0);
+    const selectedCountry = props.selectedCountry ? props.selectedCountry : 'None';
+
+    const countryConfirmed = props.countryStats.data.confirmed.value;
+    const countryRecovered = props.countryStats.data.recovered.value;
+    const countryDeaths = props.countryStats.data.deaths.value;
+
+    const { data, loading, error } = props.globalStats;
+    const globalConfirmed = data.confirmed.value;
+    const globalRecovered = data.recovered.value;
+    const globalDeaths = data.deaths.value;
+
+    const confirmedOptions = `https://quickchart.io/chart?c={
+        type:'pie', 
+        data:{
+            labels:['Country', 'Global'],
+            datasets:[
+                {data:[${countryConfirmed}, ${globalConfirmed}]}
+                ]
+            }
+        }`
+    // const confirmedOptions = `https://quickchart.io/chart?c={
+    //     type:'bar', 
+    //     data:{
+    //         labels:['Confirmed'],
+    //         datasets:[
+    //             {label: 'Country',data: [${countryConfirmed}]},
+    //             {label: 'Global',data: [${globalConfirmed}]}
+    //             ]
+    //         }
+    //     }`
+
+    const recoveredOptions = `https://quickchart.io/chart?c={
+        type:'pie', 
+        data:{
+            labels:['Country', 'Global'],
+            datasets:[
+                {data:[${countryRecovered}, ${globalRecovered}]}
+                ]
+            }
+        }`
+
+    const deathOptions = `https://quickchart.io/chart?c={
+        type:'pie', 
+        data:{
+            labels:['Country', 'Global'],
+            datasets:[
+                {data:[${countryDeaths}, ${globalDeaths}]}
+                ]
+            }
+        }`
     
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>Error...</p>
     return (
         <div className={ classes.root }>
             <Grid
@@ -25,7 +78,7 @@ export default function Graph() {
                 direction="column"
                 justify="space-evenly"
                 alignItems="center"
-                spacing={ 2 }
+                spacing={ 6 }
             >
 
                 <Grid
@@ -36,40 +89,51 @@ export default function Graph() {
                     spacing={ 2 }
                 >
                     <Grid item xs={ 2 }>
-                        <IconButton aria-label="back arrow">
+                        <IconButton
+                            aria-label="back arrow" 
+                            onClick={ () => setCategory(category => category == 0 ? category + 2 : category - 1)}
+                        >
                             <ArrowBackIosSharpIcon />
                         </IconButton>
                     </Grid>
                     <Grid item xs={ 8 }>
                         <Typography variant="h4">
                             <Box textAlign="center">
-                                Category
+                                { category === 0 ? 'Confirmed' : category === 1 ? 'Recovered' : 'Deaths'}
                             </Box>
                         </Typography>
                     </Grid>
                     <Grid item xs={ 2 }>
-                        <IconButton aria-label="forward arrow">
+                        <IconButton
+                            aria-label="forward arrow"
+                            onClick={ () => setCategory(category => category == 2 ? category - 2 : category + 1)}
+                        >
                             <ArrowForwardIosSharpIcon />
                         </IconButton>
                     </Grid>
                 </Grid>
-
-                <Grid item xs={ 12 }>
-                    <img src="https://quickchart.io/chart?c={
-                        type:'bar', 
-                        data:{
-                            labels:['Deaths'],
-                            datasets:[
-                                {label:'United States', barThickness: 'flex', data:[37730]},
-                                {label:'Global', barThickness: 'flex', data:[150948]}
-                                ]
-                            }
-                        }"
-                        height="444"
-                        width="333"
-                    ></img>
-                </Grid>
-
+                {
+                    category === 0 
+                        ? <Grid item xs={ 12 }>
+                            <img src={confirmedOptions}
+                                height="382"
+                                width="382"
+                            ></img>
+                        </Grid>
+                    : category === 1
+                        ? <Grid item xs={ 12 }>
+                            <img src={recoveredOptions}
+                                height="382"
+                                width="382"
+                            ></img>
+                        </Grid>
+                    : <Grid item xs={ 12 }>
+                        <img src={deathOptions}
+                            height="382"
+                            width="382"
+                        ></img>
+                    </Grid>
+                }
             </Grid>
         </div>
     );
