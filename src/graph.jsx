@@ -38,16 +38,6 @@ export default function Graph(props) {
                 ]
             }
         }`
-    // const confirmedOptions = `https://quickchart.io/chart?c={
-    //     type:'bar', 
-    //     data:{
-    //         labels:['Confirmed'],
-    //         datasets:[
-    //             {label: 'Country',data: [${countryConfirmed}]},
-    //             {label: 'Global',data: [${globalConfirmed}]}
-    //             ]
-    //         }
-    //     }`
 
     const recoveredOptions = `https://quickchart.io/chart?c={
         type:'pie', 

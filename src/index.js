@@ -18,7 +18,6 @@ function App() {
         setSelectedCountry(event.target.value);
     }
     const countryStats = useFetch(`https://covid19.mathdro.id/api/countries/${selectedCountry}`);
-    // console.log(countryStats);
 
     if (countryStats.loading) return <p>Loading...</p>;
     if (countryStats.error) return <p>Error...</p>;

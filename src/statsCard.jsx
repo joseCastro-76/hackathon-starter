@@ -5,8 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-// import useFetch from './useFetch';
-
 const useStyles = makeStyles({
     root: {
         minWidth: 300,
@@ -17,7 +15,6 @@ const useStyles = makeStyles({
 export default function SimpleCard(props) {
     const classes = useStyles();
 
-    // const { data, loading, error } = useFetch('https://covid19.mathdro.id/api/')
     const { data, loading, error } = props.stats;
 
     if (loading) return <p>Loading...</p>;

@@ -5,8 +5,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 
-import useFetch from './useFetch';
-
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
@@ -21,21 +19,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-
 export default function SimpleSelect(props) {
     const classes = useStyles();
-    const [country, setCountry] = React.useState('');
     
-    // const { data: countries, loading, error } = useFetch('https://covid19.mathdro.id/api/countries')
     const { data: countries, loading, error } = props.countries;
 
-    
-    // const handleChange = (event) => {
-    //     setCountry(event.target.value);
-    // };
-    
-    
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error...</p>;
 
@@ -54,7 +42,6 @@ export default function SimpleSelect(props) {
                 >
                     { countries.countries.map((country) => (
                         <MenuItem
-                            // selected={ country }
                             key={ country.iso3 }
                             value={ country.name ? country.name : '' }
                         >

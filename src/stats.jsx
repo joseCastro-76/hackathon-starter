@@ -42,7 +42,6 @@ export default function Stats(props) {
                     spacing={ 5 }
                     item xs={ 12 }
                 >
-                    {/* TODO: loop over stats */}
                     <StatsCard
                         stats={ props.stats }
                     />

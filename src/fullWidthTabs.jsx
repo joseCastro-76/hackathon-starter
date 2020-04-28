@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -10,8 +10,6 @@ import Box from '@material-ui/core/Box';
 
 import Stats from './stats';
 import Graph from './graph';
-// import useFetch from './useFetch';
-
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -58,13 +56,6 @@ export default function FullWidthTabs(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
-    // const [stats, setStats] = React.useState();
-    // const [selectedCountry, setSelectedCountry] = React.useState();
-
-    // const countries = useFetch('https://covid19.mathdro.id/api/countries');
-    // const globalStats = useFetch('https://covid19.mathdro.id/api/');
-    // const countryStats = useFetch(`https://covid19.mathdro.id/api/countries/${selectedCountry}`);
-    // console.log(countryStats);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
